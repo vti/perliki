@@ -2,8 +2,6 @@
 <head>
     <meta charset="utf-8" />
     <title>Perliki</title>
-    <link rel="stylesheet" href="/css/styles.css" type="text/css" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- 1140px Grid styles for IE -->
@@ -14,6 +12,7 @@
 
     <!-- Your styles -->
     <link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="/css/typography.css" type="text/css" media="screen" />
 
     <!--css3-mediaqueries-js - http://code.google.com/p/css3-mediaqueries-js/ - Enables media queries in some unsupported browsers-->
     <script type="text/javascript" src="/js/css3-mediaqueries.js"></script>
