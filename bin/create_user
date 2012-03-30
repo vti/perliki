@@ -1,0 +1,48 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use FindBin '$RealBin';
+
+BEGIN {
+    unshift @INC, "$RealBin/../lib";
+    unshift @INC, "$_/lib" for glob "$RealBin/../contrib/*";
+}
+
+use Digest::MD5 ();
+use Perliki::DB;
+use Perliki::DB::User;
+use Perliki::Config;
+
+my $config = Perliki::Config->new(home => "$RealBin/../")->load('config.yml');
+
+Perliki::DB->init_db(%{$config->{database}});
+
+my $name = shift @ARGV or die "Usage: <name>\n";
+
+my $password = shift @ARGV || generate_password();
+
+if (Perliki::DB::User->new(name => $name)->load) {
+    die "Use '$name' already exists\n";
+}
+
+my $user = Perliki::DB::User->new(
+    name     => $name,
+    password => Digest::MD5::md5_hex($password)
+);
+$user->create;
+
+print $password, "\n";
+
+sub generate_password {
+    my @a = (0 .. 9, 'a' .. 'z', 'A' .. 'Z', '+', '/');
+
+    my $password = '';
+
+    for (1 .. 16) {
+        $password .= $a[rand(scalar @a)];
+    }
+
+    return $password;
+}

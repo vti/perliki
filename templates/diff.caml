@@ -1,0 +1,3 @@
+&larr; <a href="/wiki/{{page.name}}?revision={{params.a}}">{{page.name}} (r{{params.a}})</a> vs <a href="/wiki/{{page.name}}?revision={{params.b}}">{{page.name}} (r{{params.b}})</a>
+
+<pre>{{diff}}</pre>

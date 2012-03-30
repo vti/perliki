@@ -1,0 +1,41 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+
+DROP TABLE IF EXISTS `user`;
+
+CREATE TABLE `user` (
+ `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+ `name` VARCHAR(255) NOT NULL,
+ `password` VARCHAR(32) NOT NULL,
+ `created` INTEGER NOT NULL,
+ UNIQUE(`name`)
+);
+
+DROP TABLE IF EXISTS `wiki`;
+
+CREATE TABLE `wiki` (
+ `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+ `root_id` INTEGER NOT NULL DEFAULT 0,
+ `user_id` INTEGER NOT NULL,
+ `created` INTEGER NOT NULL,
+ `updated` INTEGER NOT NULL DEFAULT 0,
+ `revision` INTEGER NOT NULL DEFAULT 1,
+ `name` varchar(40) NOT NULL default '',
+ `content` TEXT NOT NULL default '',
+ UNIQUE(`name`)
+);
+
+DROP TABLE IF EXISTS `history`;
+
+CREATE TABLE `history` (
+ `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+ `root_id` INTEGER NOT NULL DEFAULT 0,
+ `user_id` INTEGER NOT NULL,
+ `created` INTEGER NOT NULL,
+ `updated` INTEGER NOT NULL,
+ `revision` INTEGER NOT NULL DEFAULT 1,
+ `name` varchar(40) NOT NULL default '',
+ `content` TEXT NOT NULL default ''
+);
+
+COMMIT;

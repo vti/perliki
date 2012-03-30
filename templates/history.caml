@@ -1,0 +1,9 @@
+<ul>
+    <li><a href="/wiki/{{page.name}}">{{page.revision}}</a></li>
+    {{#history}}
+    <li>
+        <a href="/wiki/{{page.name}}?revision={{revision}}">{{revision}}</a>&nbsp;
+        <a href="/diff/{{page.name}}?a={{prev_revision}}&b={{revision}}">diff</a>
+    </li>
+    {{/history}}
+</ul>

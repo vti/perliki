@@ -1,0 +1,11 @@
+&larr; <a href="/wiki/{{page.name}}">{{page.name}}</a>
+
+<form method="POST">
+    <div>
+        <textarea name="content">{{page.content}}</textarea>
+        {{#errors.content}}{{errors.content}}{{/errors.content}}
+    </div>
+    <div>
+        <input type="submit" name="submit" value="Update" />
+    </div>
+</form>

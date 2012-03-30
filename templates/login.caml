@@ -1,0 +1,15 @@
+<h1>Login</h1>
+
+<form method="POST">
+    <div>
+        <input name="name" />
+        {{#errors.name}}{{errors.name}}{{/errors.name}}
+    </div>
+    <div>
+        <input type="password" name="password" />
+        {{#errors.password}}{{errors.password}}{{/errors.password}}
+    </div>
+    <div>
+        <input type="submit" name="submit" value="Login" />
+    </div>
+</form>

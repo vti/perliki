@@ -1,0 +1,19 @@
+<div>
+    {{&content}}
+</div>
+
+<hr />
+<div>Last modification: {{#helpers.date.format}}{{page.updated}}{{/helpers.date.format}} by {{page.user.name}}</div>
+
+{{#user}}
+<a href="/update/{{page.name}}">update</a>
+{{/user}}
+
+{{#page.has_history}}
+<a href="/diff/{{page.name}}">last modification</a>
+<a href="/history/{{page.name}}">history</a>
+{{/page.has_history}}
+
+{{#user1}}
+<a href="/delete/{{page.name}}">delete</a>
+{{/user1}}

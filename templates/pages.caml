@@ -1,0 +1,5 @@
+<ul>
+    {{#pages}}
+    <li><a href="/wiki/{{name}}">{{name}}</a></li>
+    {{/pages}}
+</ul>

@@ -1,0 +1,18 @@
+{{#preview}}
+<h1>Preview</h1>
+<div>
+{{preview}}
+</div>
+{{/preview}}
+
+<h1>Create page</h1>
+<form method="POST">
+    <div>
+        <textarea name="content">{{params.content}}</textarea>
+        {{#errors.content}}{{errors.content}}{{/errors.content}}
+    </div>
+    <div>
+        <input type="submit" name="preview" value="Preview" />
+        <input type="submit" name="submit" value="Create" />
+    </div>
+</form>

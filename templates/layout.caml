@@ -1,0 +1,58 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8" />
+    <title>Perliki</title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 1140px Grid styles for IE -->
+    <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" /><![endif]-->
+
+    <!-- The 1140px Grid - http://cssgrid.net/ -->
+    <link rel="stylesheet" href="/css/1140.css" type="text/css" media="screen" />
+
+    <!-- Your styles -->
+    <link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen" />
+
+    <!--css3-mediaqueries-js - http://code.google.com/p/css3-mediaqueries-js/ - Enables media queries in some unsupported browsers-->
+    <script type="text/javascript" src="/js/css3-mediaqueries.js"></script>
+</head>
+<body>
+
+<div class="container header">
+    <div class="row">
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="twocol">
+        </div>
+        <div class="eightcol">
+            <a href="/wiki/Index">Index</a> | <a href="/changes">Last changes</a> | <a href="/wiki/">All pages</a>
+            <div style="float:right">
+                {{#user}}
+                    <a href="/logout">Logout ({{name}})</a>
+                {{/user}}
+                {{^user}}
+                    <a href="/login">Login</a>
+                {{/user}}
+            </div>
+            <div style="clear:both"></div>
+
+            <hr />
+            {{&content}}
+        </div>
+        <div class="twocol last">
+        </div>
+    </div>
+</div>
+
+<div class="container footer">
+    <div class="row">
+    </div>
+</div>
+
+</body>
+</html>

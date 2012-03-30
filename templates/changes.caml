@@ -1,0 +1,5 @@
+<ul>
+    {{#pages}}
+    <li><a href="/wiki/{{name}}">{{name}}</a> {{#is_created}}created{{/is_created}}{{#is_updated}}updated{{/is_updated}} at {{#helpers.date.format}}{{created}}{{/helpers.date.format}} by {{user.name}}</li>
+    {{/pages}}
+</ul>
