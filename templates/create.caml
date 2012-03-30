@@ -1,7 +1,7 @@
 {{#preview}}
 <h1>Preview</h1>
 <div>
-{{preview}}
+{{&page.content_rendered}}
 </div>
 {{/preview}}
 

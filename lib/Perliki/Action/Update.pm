@@ -19,9 +19,17 @@ sub run {
         if ($self->validate) {
             $page->set_columns(%{$self->validated_params},
                 user_id => $self->env->get('user')->get_column('id'));
-            $page->update;
 
-            return $self->redirect('page', name => $name);
+            if ($self->req->param('preview')) {
+                $self->set_var(page => $page->to_hash);
+                $self->set_var(params => $self->validated_params);
+                $self->set_var(preview => 1);
+            }
+            else {
+                $page->update;
+
+                return $self->redirect('page', name => $name);
+            }
         }
         else {
             $self->set_var(

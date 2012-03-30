@@ -6,6 +6,7 @@ use warnings;
 use base 'Perliki::DB';
 
 use Perliki::DB::History;
+use Text::MultiMarkdown;
 
 __PACKAGE__->meta(
     table   => 'wiki',
@@ -78,8 +79,19 @@ sub to_hash {
     my $hash = $self->SUPER::to_hash;
 
     $hash->{has_history} = $self->has_history;
+    $hash->{content_rendered} = $self->_render($self->get_column('content'));
 
     return $hash;
 }
+
+sub _render {
+    my $self = shift;
+    my ($text) = @_;
+
+    my $md = Text::MultiMarkdown->new(base_url => '/wiki/', use_wikilinks => 1);
+
+    return $md->markdown($text);
+}
+
 
 1;

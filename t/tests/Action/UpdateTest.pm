@@ -64,24 +64,26 @@ sub set_validation_errors : Test {
     is_deeply($errors, {content => 'REQUIRED'});
 }
 
-#sub on_preview_set_vars : Test {
-#    my $self = shift;
-#
-#    my $action = $self->_build_action(
-#        captures => {name => 'foo'},
-#        env      => $self->_build_env(
-#            method  => 'POST',
-#            query   => 'preview=1',
-#            content => 'content=foobar'
-#        )
-#    );
-#
-#    $action->run;
-#
-#    my $vars = $action->env->get('displayer.vars');
-#
-#    is_deeply($vars, {params => {content => 'foobar'}, preview => 'foobar'});
-#}
+sub on_preview_set_vars : Test(3) {
+    my $self = shift;
+
+    my $action = $self->_build_action(
+        captures => {name => 'foo'},
+        env      => $self->_build_env(
+            method  => 'POST',
+            query   => 'preview=1',
+            content => 'content=foobar'
+        )
+    );
+
+    $action->run;
+
+    my $vars = $action->env->get('displayer.vars');
+
+    ok(exists $vars->{params}->{content});
+    ok(exists $vars->{preview});
+    ok(exists $vars->{page});
+}
 
 sub update_page : Test {
     my $self = shift;

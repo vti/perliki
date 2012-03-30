@@ -22,8 +22,9 @@ sub run {
         );
 
         if ($self->req->param('preview')) {
+            $self->set_var(page => $page->to_hash);
             $self->set_var(params => $self->validated_params);
-            $self->set_var(preview => $self->req->param('content'));
+            $self->set_var(preview => 1);
         }
         else {
             $page->create;

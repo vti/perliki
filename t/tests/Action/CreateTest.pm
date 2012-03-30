@@ -51,7 +51,7 @@ sub set_validation_errors : Test {
     is_deeply($errors, {content => 'REQUIRED'});
 }
 
-sub on_preview_set_vars : Test {
+sub on_preview_set_vars : Test(3) {
     my $self = shift;
 
     my $action = $self->_build_action(
@@ -67,8 +67,11 @@ sub on_preview_set_vars : Test {
 
     my $vars = $action->env->get('displayer.vars');
 
-    is_deeply($vars, {params => {content => 'foobar'}, preview => 'foobar'});
+    ok(exists $vars->{params}->{content});
+    ok(exists $vars->{preview});
+    ok(exists $vars->{page});
 }
+
 
 sub create_page : Test {
     my $self = shift;

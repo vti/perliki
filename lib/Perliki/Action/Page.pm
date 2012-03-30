@@ -5,7 +5,6 @@ use warnings;
 
 use base 'Lamework::Action';
 
-use Text::MultiMarkdown ();
 use Perliki::DB::Page;
 
 sub run {
@@ -27,19 +26,7 @@ sub run {
         return $self->not_found unless $page;
     }
 
-    my $content = $page->get_column('content');
-    $content = $self->_render($content);
-
-    $self->set_var(page => $page->to_hash, content => $content);
-}
-
-sub _render {
-    my $self = shift;
-    my ($text) = @_;
-
-    my $md = Text::MultiMarkdown->new(base_url => '/wiki/', use_wikilinks => 1);
-
-    return $md->markdown($text);
+    $self->set_var(page => $page->to_hash);
 }
 
 1;
