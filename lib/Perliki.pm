@@ -81,14 +81,18 @@ sub startup {
             sub {
                 my $env = shift;
 
-                Lamework::Env->new($env)->set(
+                $env = Lamework::Env->new($env);
+
+                $env->set(
                     'displayer.vars.helpers',
                     Lamework::HelperFactory->new(
                         namespace => 'Perliki::Helper::'
                     )
                 );
 
-                return $app->($env);
+                $env->set('displayer.vars.title', $config->{wiki}->{title});
+
+                return $app->($env->to_hash);
               }
         }
     );
