@@ -10,6 +10,7 @@ use Lamework::ActionFactory;
 use Lamework::Dispatcher::Routes;
 use Lamework::Displayer;
 use Lamework::HelperFactory;
+use Lamework::HTTPExceptionResolver;
 use Lamework::Renderer::Caml;
 use Lamework::Routes;
 
@@ -31,7 +32,9 @@ sub startup {
         layout   => 'layout.caml'
     );
 
-    $self->add_middleware('HTTPExceptions', displayer => $displayer);
+    $self->add_middleware('HTTPExceptions',
+        resolver =>
+          Lamework::HTTPExceptionResolver->new->build('template', displayer => $displayer));
 
     $self->add_middleware(
         'Static',
