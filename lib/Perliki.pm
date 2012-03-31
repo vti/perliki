@@ -66,7 +66,7 @@ sub startup {
         }
     );
 
-    $self->add_middleware('ACL', acl => $self->_build_acl);
+    $self->add_middleware('ACL', acl => $self->_build_acl, redirect_to => '/login');
 
     $self->add_middleware(
         'ActionDispatcher',

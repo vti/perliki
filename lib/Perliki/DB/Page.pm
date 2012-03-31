@@ -36,7 +36,8 @@ __PACKAGE__->meta(
 sub has_history {
     my $self = shift;
 
-    return $self->get_column('revision') > 1;
+    my $revision = $self->get_column('revision');
+    return $revision && $revision > 1;
 }
 
 sub create {
