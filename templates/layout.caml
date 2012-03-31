@@ -10,12 +10,9 @@
     <!-- The 1140px Grid - http://cssgrid.net/ -->
     <link rel="stylesheet" href="/css/1140.css" type="text/css" media="screen" />
 
-    <!-- Your styles -->
-    <link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="/css/typography.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen" />
 
-    <!--css3-mediaqueries-js - http://code.google.com/p/css3-mediaqueries-js/ - Enables media queries in some unsupported browsers-->
-    <script type="text/javascript" src="/js/css3-mediaqueries.js"></script>
 </head>
 <body>
 
@@ -52,6 +49,12 @@
     <div class="row">
     </div>
 </div>
+
+    <!--css3-mediaqueries-js - http://code.google.com/p/css3-mediaqueries-js/ - Enables media queries in some unsupported browsers-->
+    <script type="text/javascript" src="/js/libs/css3-mediaqueries.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/libs/jquery-1.7.2.min.js"><\/script>')</script>
 
 </body>
 </html>
