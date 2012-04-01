@@ -67,11 +67,10 @@ sub on_preview_set_vars : Test(3) {
 
     my $vars = $action->env->get('displayer.vars');
 
-    ok(exists $vars->{params}->{content});
+    ok(exists $vars->{form}->{content});
     ok(exists $vars->{preview});
     ok(exists $vars->{page});
 }
-
 
 sub create_page : Test {
     my $self = shift;

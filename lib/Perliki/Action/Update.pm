@@ -21,8 +21,6 @@ sub run {
                 user_id => $self->env->get('user')->get_column('id'));
 
             if ($self->req->param('preview')) {
-                $self->set_var(page => $page->to_hash);
-                $self->set_var(params => $self->validated_params);
                 $self->set_var(preview => 1);
             }
             else {
@@ -32,15 +30,14 @@ sub run {
             }
         }
         else {
-            $self->set_var(
-                params => $self->req->parameters,
-                errors => $self->{validator}->errors
-            );
+            $self->set_var(errors => $self->{validator}->errors);
         }
     }
-    else {
-        $self->set_var(page => $page->to_hash);
-    }
+
+    $self->set_var(
+        page => $page->to_hash,
+        form => $self->merge_with_params($page->to_hash),
+    );
 }
 
 1;

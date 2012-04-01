@@ -10,7 +10,7 @@
 <h1>Update</h1>
 <form method="POST">
     <div>
-        <textarea name="content">{{page.content}}</textarea>
+        <textarea name="content">{{form.content}}</textarea>
         {{#errors.content}}{{errors.content}}{{/errors.content}}
     </div>
     <div>
