@@ -10,7 +10,6 @@ use Lamework::ActionFactory;
 use Lamework::Dispatcher::Routes;
 use Lamework::Displayer;
 use Lamework::HelperFactory;
-use Lamework::HTTPExceptionResolver;
 use Lamework::Renderer::Caml;
 use Lamework::Routes;
 
@@ -32,9 +31,13 @@ sub startup {
         layout   => 'layout.caml'
     );
 
-    $self->add_middleware('HTTPExceptions',
-        resolver =>
-          Lamework::HTTPExceptionResolver->new->build('template', displayer => $displayer));
+    $self->add_middleware(
+        'ErrorDocument',
+        404        => '/not_found',
+        subrequest => 1
+    );
+
+    $self->add_middleware('HTTPExceptions');
 
     $self->add_middleware(
         'Static',
@@ -117,6 +120,7 @@ sub _build_routes {
     $routes->add_route('/changes',       name => 'changes');
     $routes->add_route('/login',         name => 'login');
     $routes->add_route('/logout',        name => 'logout');
+    $routes->add_route('/not_found',     name => 'not_found');
 
     return $routes;
 }
@@ -128,6 +132,7 @@ sub _build_acl {
 
     $acl->add_role('anonymous');
     $acl->allow('anonymous', 'login');
+    $acl->allow('anonymous', 'not_found');
 
     if (!$self->{config}->{wiki}->{private}) {
         $acl->allow('anonymous', 'index');
