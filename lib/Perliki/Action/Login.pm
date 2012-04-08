@@ -3,9 +3,8 @@ package Perliki::Action::Login;
 use strict;
 use warnings;
 
-use base 'Lamework::Action';
+use base 'Perliki::Action::FormBase';
 
-use Input::Validator;
 use Digest::MD5 ();
 use Perliki::DB::User;
 use Plack::Session;
@@ -15,10 +14,8 @@ sub BUILD {
 
     $self->SUPER::BUILD();
 
-    $self->{validator} ||= Input::Validator->new;
-
-    $self->{validator}->field('name')->required(1);
-    $self->{validator}->field('password')->required(1);
+    $self->{validator}->add_field('name');
+    $self->{validator}->add_field('password');
 }
 
 sub run {
@@ -42,20 +39,6 @@ sub run {
     }
 
     return $self;
-}
-
-sub validate {
-    my $self = shift;
-
-    my $validator = $self->{validator};
-
-    return $validator->validate($self->req->parameters);
-}
-
-sub validated_params {
-    my $self = shift;
-
-    return $self->{validator}->values;
 }
 
 sub _load_user {

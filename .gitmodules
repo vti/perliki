@@ -4,6 +4,3 @@
 [submodule "contrib/object-db"]
 	path = contrib/object-db
 	url = https://github.com/vti/object-db3.git
-[submodule "contrib/input-validator"]
-	path = contrib/input-validator
-	url = https://github.com/vti/input-validator.git

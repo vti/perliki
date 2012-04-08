@@ -10,7 +10,7 @@ sub BUILD {
 
     $self->SUPER::BUILD();
 
-    $self->{validator}->field('content')->required(1);
+    $self->{validator}->add_field('content');
 }
 
 1;

@@ -5,14 +5,14 @@ use warnings;
 
 use base 'Lamework::Action';
 
-use Input::Validator;
+use Lamework::Validator;
 
 sub BUILD {
     my $self = shift;
 
     $self->SUPER::BUILD();
 
-    $self->{validator} ||= Input::Validator->new;
+    $self->{validator} ||= Lamework::Validator->new;
 }
 
 sub validate {
@@ -20,13 +20,13 @@ sub validate {
 
     my $validator = $self->{validator};
 
-    return $validator->validate($self->req->parameters);
+    return $validator->validate({$self->req->parameters->flatten});
 }
 
 sub validated_params {
     my $self = shift;
 
-    return $self->{validator}->values;
+    return $self->{validator}->validated_params;
 }
 
 sub merge_with_params {
