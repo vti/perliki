@@ -1,0 +1,10 @@
+=head1 Perliki
+
+Is a simple wiki engine.
+
+=head1 Installation
+
+    $ sudo cpanm --installdeps .
+    $ cp config.yml.example config.yml
+    $ plackup
+

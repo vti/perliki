@@ -17,6 +17,8 @@ use Perliki::DB;
 use Perliki::DB::User;
 use Perliki::Config;
 
+our $VERSION = '0.01';
+
 sub startup {
     my $self = shift;
 
