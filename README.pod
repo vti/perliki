@@ -6,5 +6,6 @@ Is a simple wiki engine.
 
     $ sudo cpanm --installdeps .
     $ cp config.yml.example config.yml
+    $ sqlite3 wiki.db < schema/SQLite.sql
     $ plackup
 
