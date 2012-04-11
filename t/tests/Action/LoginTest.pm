@@ -20,7 +20,7 @@ sub do_nothing_on_GET_method : Test {
 
     $action->run;
 
-    ok(!$action->env->get('displayer.vars'));
+    ok(!$action->env->{'lamework.displayer.vars'});
 }
 
 sub set_validation_errors : Test {
@@ -30,7 +30,7 @@ sub set_validation_errors : Test {
 
     $action->run;
 
-    my $errors = $action->env->get('displayer.vars')->{errors};
+    my $errors = $action->env->{'lamework.displayer.vars'}->{errors};
 
     is_deeply($errors, {name => 'REQUIRED', password => 'REQUIRED'});
 }
@@ -47,7 +47,7 @@ sub set_validation_errors_on_unknown_user : Test {
 
     $action->run;
 
-    my $errors = $action->env->get('displayer.vars')->{errors};
+    my $errors = $action->env->{'lamework.displayer.vars'}->{errors};
 
     is_deeply($errors, {name => 'Unknown user or wrong password'});
 }
@@ -66,7 +66,7 @@ sub set_validation_errors_on_unknown_password : Test {
 
     $action->run;
 
-    my $errors = $action->env->get('displayer.vars')->{errors};
+    my $errors = $action->env->{'lamework.displayer.vars'}->{errors};
 
     is_deeply($errors, {name => 'Unknown user or wrong password'});
 }
@@ -125,7 +125,7 @@ sub _build_action {
     $dr = Test::MockObject::Extends->new($dr);
     $dr->mock(build_path => sub {'/'});
 
-    $action->env->set('dispatched_request' => $dr);
+    $action->env->{'lamework.dispatched_request'} = $dr;
 
     return $action;
 }

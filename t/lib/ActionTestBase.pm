@@ -41,7 +41,7 @@ sub _build_env {
     }
 
     if (my $user = $self->{user}) {
-        $env->{lamework}->{user} = $user;
+        $env->{'lamework.user'} = $user;
     }
 
     $env = {%$env, %params};

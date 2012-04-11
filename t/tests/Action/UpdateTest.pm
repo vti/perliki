@@ -44,7 +44,7 @@ sub set_page_on_GET_method : Test {
 
     $action->run;
 
-    my $vars = $action->env->get('displayer.vars');
+    my $vars = $action->env->{'lamework.displayer.vars'};
 
     ok($vars->{page});
 }
@@ -59,7 +59,7 @@ sub set_validation_errors : Test {
 
     $action->run;
 
-    my $errors = $action->env->get('displayer.vars')->{errors};
+    my $errors = $action->env->{'lamework.displayer.vars'}->{errors};
 
     is_deeply($errors, {content => 'REQUIRED'});
 }
@@ -78,7 +78,7 @@ sub on_preview_set_vars : Test(3) {
 
     $action->run;
 
-    my $vars = $action->env->get('displayer.vars');
+    my $vars = $action->env->{'lamework.displayer.vars'};
 
     ok(exists $vars->{form}->{content});
     ok(exists $vars->{preview});
@@ -96,8 +96,6 @@ sub update_page : Test {
 
     $action->run;
 
-    my $vars = $action->env->get('displayer.vars');
-
     my $page = Perliki::DB::Page->new->table->find(first => 1);
     ok($page);
 }
@@ -112,8 +110,6 @@ sub set_correct_page_columns : Test(2) {
     );
 
     $action->run;
-
-    my $vars = $action->env->get('displayer.vars');
 
     my $page = Perliki::DB::Page->new->table->find(first => 1);
 
@@ -132,8 +128,6 @@ sub redirect_after_update : Test {
 
     $action->run;
 
-    my $vars = $action->env->get('displayer.vars');
-
     is($action->res->code, 302);
 }
 
@@ -149,7 +143,7 @@ sub _build_action {
     $dr = Test::MockObject::Extends->new($dr);
     $dr->mock(build_path => sub {'/'});
 
-    $action->env->set('dispatched_request' => $dr);
+    $action->env->{'lamework.dispatched_request'} = $dr;
 
     return $action;
 }

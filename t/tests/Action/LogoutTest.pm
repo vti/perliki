@@ -59,7 +59,7 @@ sub _build_action {
     $dr = Test::MockObject::Extends->new($dr);
     $dr->mock(build_path => sub {'/'});
 
-    $action->env->set('dispatched_request' => $dr);
+    $action->env->{'lamework.dispatched_request'} = $dr;
 
     return $action;
 }

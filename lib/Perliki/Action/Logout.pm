@@ -10,7 +10,7 @@ use Plack::Session;
 sub run {
     my $self = shift;
 
-    my $session = Plack::Session->new($self->env->to_hash);
+    my $session = Plack::Session->new($self->env);
     $session->expire;
 
     $self->redirect('/');

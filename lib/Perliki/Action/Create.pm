@@ -20,7 +20,7 @@ sub run {
         my $page = Perliki::DB::Page->new(
             name => $name,
             %{$self->validated_params},
-            user_id => $self->env->get('user')->get_column('id')
+            user_id => $self->env->{'lamework.user'}->get_column('id')
         );
 
         if ($self->req->param('preview')) {

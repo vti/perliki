@@ -25,7 +25,7 @@ sub run {
 
     if ($self->validate) {
         if (my $user = $self->_load_user) {
-            my $session = Plack::Session->new($self->env->to_hash);
+            my $session = Plack::Session->new($self->env);
             $session->set(user => {id => $user->get_column('id')});
             return $self->redirect('index');
         }

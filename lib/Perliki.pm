@@ -65,8 +65,7 @@ sub startup {
             my $user = Perliki::DB::User->new(id => $params->{id})->load;
             return unless $user;
 
-            Lamework::Env->new($env)
-              ->set('displayer.vars.user', $user->to_hash);
+            $env->{'lamework.displayer.vars'}->{'user'} = $user->to_hash;
             return $user;
         }
     );
@@ -86,18 +85,13 @@ sub startup {
             sub {
                 my $env = shift;
 
-                $env = Lamework::Env->new($env);
+                $env->{'lamework.displayer.vars'}->{'helpers'} =
+                  Lamework::HelperFactory->new(
+                    namespace => 'Perliki::Helper::');
 
-                $env->set(
-                    'displayer.vars.helpers',
-                    Lamework::HelperFactory->new(
-                        namespace => 'Perliki::Helper::'
-                    )
-                );
+                $env->{'lamework.displayer.vars'}->{'title'} = $config->{wiki}->{title};
 
-                $env->set('displayer.vars.title', $config->{wiki}->{title});
-
-                return $app->($env->to_hash);
+                return $app->($env);
               }
         }
     );
