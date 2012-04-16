@@ -1,20 +1,20 @@
 &larr; <a href="/wiki/{{page.name}}">{{page.name}}</a>
 
 {{#preview}}
-<h1>Preview</h1>
+<h1>{{#loc}}Preview{{/loc}}</h1>
 <div>
 {{&page.content_rendered}}
 </div>
 {{/preview}}
 
-<h1>Update</h1>
+<h1>{{#loc}}Update{{/loc}}</h1>
 <form method="POST">
     <div>
         <textarea name="content">{{form.content}}</textarea>
         {{#errors.content}}{{errors.content}}{{/errors.content}}
     </div>
     <div>
-        <input type="submit" name="preview" value="Preview" />
-        <input type="submit" name="submit" value="Update" />
+        <input type="submit" name="preview" value="{{#loc}}Preview{{/loc}}" />
+        <input type="submit" name="submit" value="{{#loc}}Update{{/loc}}" />
     </div>
 </form>

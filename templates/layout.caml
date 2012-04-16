@@ -26,13 +26,16 @@
         <div class="twocol">
         </div>
         <div class="eightcol">
-            <a href="/wiki/Index">Index</a> | <a href="/changes">Last changes</a> | <a href="/wiki/">All pages</a>
+            <a href="/wiki/Index">Index</a> | <a href="/changes">{{#loc}}Last changes{{/loc}}</a> | <a href="/wiki/">{{#loc}}All pages{{/loc}}</a>
             <div style="float:right">
+                {{#languages}}
+                    <a href="/{{code}}">{{name}}</a>
+                {{/languages}}
                 {{#user}}
-                    <a href="/logout">Logout ({{name}})</a>
+                    | <a href="/logout">{{#loc}}Logout{{/loc}} ({{name}})</a>
                 {{/user}}
                 {{^user}}
-                    <a href="/login">Login</a>
+                    <a href="/login">{{#loc}}Login{{/loc}}</a>
                 {{/user}}
             </div>
             <div style="clear:both"></div>

@@ -10,6 +10,7 @@ use Lamework::ActionFactory;
 use Lamework::Dispatcher::Routes;
 use Lamework::Displayer;
 use Lamework::HelperFactory;
+use Lamework::I18N;
 use Lamework::Renderer::Caml;
 use Lamework::Routes;
 
@@ -27,6 +28,8 @@ sub startup {
     $self->{config} = $config;
 
     Perliki::DB->init_db(%{$config->{database}});
+
+    my $i18n = Lamework::I18N->new(app_class => __PACKAGE__);
 
     my $displayer = Lamework::Displayer->new(
         renderer => Lamework::Renderer::Caml->new(home => $self->{home}),
@@ -52,6 +55,8 @@ sub startup {
         secret  => $self->{config}->{session}->{secret},
         expires => $self->{config}->{session}->{expires}
     );
+
+    $self->add_middleware('I18N', i18n => $i18n);
 
     $self->add_middleware('RequestDispatcher',
         dispatcher =>
@@ -90,6 +95,16 @@ sub startup {
                     namespace => 'Perliki::Helper::');
 
                 $env->{'lamework.displayer.vars'}->{'title'} = $config->{wiki}->{title};
+
+                my $languages_names = $i18n->get_languages_names;
+                if (keys %$languages_names > 1) {
+                    $env->{'lamework.displayer.vars'}->{'languages'} =
+                      [map { {code => $_, name => $languages_names->{$_}} }
+                          keys %$languages_names];
+                }
+
+                $env->{'lamework.displayer.vars'}->{'loc'} =
+                  sub { shift; $env->{'lamework.i18n.maketext'}->loc(@_) };
 
                 return $app->($env);
               }

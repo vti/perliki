@@ -1,4 +1,4 @@
-<h1>Login</h1>
+<h1>{{#loc}}Login{{/loc}}</h1>
 
 <form method="POST">
     <div>
@@ -10,6 +10,6 @@
         {{#errors.password}}{{errors.password}}{{/errors.password}}
     </div>
     <div>
-        <input type="submit" name="submit" value="Login" />
+        <input type="submit" name="submit" value="{{#loc}}Login{{/loc}}" />
     </div>
 </form>
