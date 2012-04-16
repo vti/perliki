@@ -10,7 +10,7 @@ use Test::Fatal;
 use Test::MockObject::Extends;
 
 use Perliki::DB::User;
-use Lamework::DispatchedRequest;
+use Turnaround::DispatchedRequest;
 
 sub setup : Test(setup) {
     my $self = shift;
@@ -41,7 +41,7 @@ sub _build_env {
     }
 
     if (my $user = $self->{user}) {
-        $env->{'lamework.user'} = $user;
+        $env->{'turnaround.user'} = $user;
     }
 
     $env = {%$env, %params};

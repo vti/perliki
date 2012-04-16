@@ -3,7 +3,7 @@ package Perliki::Config;
 use strict;
 use warnings;
 
-use base 'Lamework::Config';
+use base 'Turnaround::Config';
 
 use File::Spec;
 

@@ -11,7 +11,7 @@ use Test::MockObject::Extends;
 
 use Digest::MD5 ();
 use Perliki::Action::Login;
-use Lamework::DispatchedRequest;
+use Turnaround::DispatchedRequest;
 
 sub do_nothing_on_GET_method : Test {
     my $self = shift;
@@ -20,7 +20,7 @@ sub do_nothing_on_GET_method : Test {
 
     $action->run;
 
-    ok(!$action->env->{'lamework.displayer.vars'});
+    ok(!$action->env->{'turnaround.displayer.vars'});
 }
 
 sub set_validation_errors : Test {
@@ -30,7 +30,7 @@ sub set_validation_errors : Test {
 
     $action->run;
 
-    my $errors = $action->env->{'lamework.displayer.vars'}->{errors};
+    my $errors = $action->env->{'turnaround.displayer.vars'}->{errors};
 
     is_deeply($errors, {name => 'REQUIRED', password => 'REQUIRED'});
 }
@@ -47,7 +47,7 @@ sub set_validation_errors_on_unknown_user : Test {
 
     $action->run;
 
-    my $errors = $action->env->{'lamework.displayer.vars'}->{errors};
+    my $errors = $action->env->{'turnaround.displayer.vars'}->{errors};
 
     is_deeply($errors, {name => 'Unknown user or wrong password'});
 }
@@ -66,7 +66,7 @@ sub set_validation_errors_on_unknown_password : Test {
 
     $action->run;
 
-    my $errors = $action->env->{'lamework.displayer.vars'}->{errors};
+    my $errors = $action->env->{'turnaround.displayer.vars'}->{errors};
 
     is_deeply($errors, {name => 'Unknown user or wrong password'});
 }
@@ -121,11 +121,11 @@ sub _build_action {
 
     my $action = Perliki::Action::Login->new(%params);
 
-    my $dr = Lamework::DispatchedRequest->new(captures => {});
+    my $dr = Turnaround::DispatchedRequest->new(captures => {});
     $dr = Test::MockObject::Extends->new($dr);
     $dr->mock(build_path => sub {'/'});
 
-    $action->env->{'lamework.dispatched_request'} = $dr;
+    $action->env->{'turnaround.dispatched_request'} = $dr;
 
     return $action;
 }

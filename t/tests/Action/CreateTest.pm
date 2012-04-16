@@ -11,7 +11,7 @@ use Test::MockObject::Extends;
 
 use Perliki::DB::User;
 use Perliki::Action::Create;
-use Lamework::DispatchedRequest;
+use Turnaround::DispatchedRequest;
 
 sub throw_404_when_page_exists : Test {
     my $self = shift;
@@ -33,7 +33,7 @@ sub do_nothing_on_GET_method : Test {
 
     $action->run;
 
-    ok(!$action->env->{'lamework.displayer.vars'});
+    ok(!$action->env->{'turnaround.displayer.vars'});
 }
 
 sub set_validation_errors : Test {
@@ -46,7 +46,7 @@ sub set_validation_errors : Test {
 
     $action->run;
 
-    my $errors = $action->env->{'lamework.displayer.vars'}->{errors};
+    my $errors = $action->env->{'turnaround.displayer.vars'}->{errors};
 
     is_deeply($errors, {content => 'REQUIRED'});
 }
@@ -65,7 +65,7 @@ sub on_preview_set_vars : Test(3) {
 
     $action->run;
 
-    my $vars = $action->env->{'lamework.displayer.vars'};
+    my $vars = $action->env->{'turnaround.displayer.vars'};
 
     ok(exists $vars->{form}->{content});
     ok(exists $vars->{preview});
@@ -83,7 +83,7 @@ sub create_page : Test {
 
     $action->run;
 
-    my $vars = $action->env->{'lamework.displayer.vars'};
+    my $vars = $action->env->{'turnaround.displayer.vars'};
 
     my $page = Perliki::DB::Page->new->table->find(first => 1);
     ok($page);
@@ -100,7 +100,7 @@ sub set_correct_page_columns : Test(2) {
 
     $action->run;
 
-    my $vars = $action->env->{'lamework.displayer.vars'};
+    my $vars = $action->env->{'turnaround.displayer.vars'};
 
     my $page = Perliki::DB::Page->new->table->find(first => 1);
 
@@ -130,11 +130,11 @@ sub _build_action {
 
     my $action = Perliki::Action::Create->new(%params);
 
-    my $dr = Lamework::DispatchedRequest->new(captures => $captures);
+    my $dr = Turnaround::DispatchedRequest->new(captures => $captures);
     $dr = Test::MockObject::Extends->new($dr);
     $dr->mock(build_path => sub {'/'});
 
-    $action->env->{'lamework.dispatched_request'} = $dr;
+    $action->env->{'turnaround.dispatched_request'} = $dr;
 
     return $action;
 }

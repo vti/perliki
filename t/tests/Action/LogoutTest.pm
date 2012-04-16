@@ -10,7 +10,7 @@ use Test::Fatal;
 use Test::MockObject::Extends;
 
 use Perliki::Action::Logout;
-use Lamework::DispatchedRequest;
+use Turnaround::DispatchedRequest;
 
 sub remove_session : Test {
     my $self = shift;
@@ -55,11 +55,11 @@ sub _build_action {
 
     my $action = Perliki::Action::Logout->new(%params);
 
-    my $dr = Lamework::DispatchedRequest->new(captures => {});
+    my $dr = Turnaround::DispatchedRequest->new(captures => {});
     $dr = Test::MockObject::Extends->new($dr);
     $dr->mock(build_path => sub {'/'});
 
-    $action->env->{'lamework.dispatched_request'} = $dr;
+    $action->env->{'turnaround.dispatched_request'} = $dr;
 
     return $action;
 }

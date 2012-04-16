@@ -3,16 +3,16 @@ package Perliki::Action::FormBase;
 use strict;
 use warnings;
 
-use base 'Lamework::Action';
+use base 'Turnaround::Action';
 
-use Lamework::Validator;
+use Turnaround::Validator;
 
 sub BUILD {
     my $self = shift;
 
     $self->SUPER::BUILD();
 
-    $self->{validator} ||= Lamework::Validator->new;
+    $self->{validator} ||= Turnaround::Validator->new;
 }
 
 sub validate {

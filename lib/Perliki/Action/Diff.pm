@@ -3,7 +3,7 @@ package Perliki::Action::Diff;
 use strict;
 use warnings;
 
-use base 'Lamework::Action';
+use base 'Turnaround::Action';
 
 use Perliki::DB::Page;
 use Perliki::DB::History;

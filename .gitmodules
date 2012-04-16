@@ -1,6 +1,6 @@
-[submodule "contrib/lamework"]
-	path = contrib/lamework
-	url = https://github.com/vti/lamework.git
 [submodule "contrib/object-db"]
 	path = contrib/object-db
 	url = https://github.com/vti/object-db3.git
+[submodule "contrib/turnaround"]
+	path = contrib/turnaround
+	url = https://github.com/vti/turnaround.git

@@ -3,16 +3,16 @@ package Perliki;
 use strict;
 use warnings;
 
-use base 'Lamework';
+use base 'Turnaround';
 
-use Lamework::ACL::Loader;
-use Lamework::ActionFactory;
-use Lamework::Dispatcher::Routes;
-use Lamework::Displayer;
-use Lamework::HelperFactory;
-use Lamework::I18N;
-use Lamework::Renderer::Caml;
-use Lamework::Routes::Loader;
+use Turnaround::ACL::Loader;
+use Turnaround::ActionFactory;
+use Turnaround::Dispatcher::Routes;
+use Turnaround::Displayer;
+use Turnaround::HelperFactory;
+use Turnaround::I18N;
+use Turnaround::Renderer::Caml;
+use Turnaround::Routes::Loader;
 
 use Perliki::DB;
 use Perliki::DB::User;
@@ -30,10 +30,10 @@ sub startup {
 
     Perliki::DB->init_db(%{$config->{database}});
 
-    my $i18n = Lamework::I18N->new(app_class => __PACKAGE__);
+    my $i18n = Turnaround::I18N->new(app_class => __PACKAGE__);
 
-    my $displayer = Lamework::Displayer->new(
-        renderer => Lamework::Renderer::Caml->new(home => $self->{home}),
+    my $displayer = Turnaround::Displayer->new(
+        renderer => Turnaround::Renderer::Caml->new(home => $self->{home}),
         layout   => 'layout.caml'
     );
 
@@ -62,8 +62,8 @@ sub startup {
 
     $self->add_middleware(
         'RequestDispatcher',
-        dispatcher => Lamework::Dispatcher::Routes->new(
-            routes => Lamework::Routes::Loader->new->load(
+        dispatcher => Turnaround::Dispatcher::Routes->new(
+            routes => Turnaround::Routes::Loader->new->load(
                 $self->{home}->catfile('configs/routes.yml')
             )
         )
@@ -79,14 +79,14 @@ sub startup {
             my $user = Perliki::DB::User->new(id => $session->{user}->{id})->load;
             return unless $user;
 
-            $env->{'lamework.displayer.vars'}->{'user'} = $user->to_hash;
+            $env->{'turnaround.displayer.vars'}->{'user'} = $user->to_hash;
             return $user;
         }
     );
 
     $self->add_middleware(
         'ACL',
-        acl => Lamework::ACL::Loader->load(
+        acl => Turnaround::ACL::Loader->load(
             $self->{home}->catfile('configs/acl.yml')
         ),
         redirect_to => '/login'
@@ -94,7 +94,7 @@ sub startup {
 
     $self->add_middleware(
         'ActionDispatcher',
-        action_factory => Lamework::ActionFactory->new(
+        action_factory => Turnaround::ActionFactory->new(
             namespace => ref($self) . '::Action::'
         )
     );
@@ -105,21 +105,21 @@ sub startup {
             sub {
                 my $env = shift;
 
-                $env->{'lamework.displayer.vars'}->{'helpers'} =
-                  Lamework::HelperFactory->new(
+                $env->{'turnaround.displayer.vars'}->{'helpers'} =
+                  Turnaround::HelperFactory->new(
                     namespace => 'Perliki::Helper::');
 
-                $env->{'lamework.displayer.vars'}->{'title'} = $config->{wiki}->{title};
+                $env->{'turnaround.displayer.vars'}->{'title'} = $config->{wiki}->{title};
 
                 my $languages_names = $i18n->get_languages_names;
                 if (keys %$languages_names > 1) {
-                    $env->{'lamework.displayer.vars'}->{'languages'} =
+                    $env->{'turnaround.displayer.vars'}->{'languages'} =
                       [map { {code => $_, name => $languages_names->{$_}} }
                           keys %$languages_names];
                 }
 
-                $env->{'lamework.displayer.vars'}->{'loc'} =
-                  sub { shift; $env->{'lamework.i18n.maketext'}->loc(@_) };
+                $env->{'turnaround.displayer.vars'}->{'loc'} =
+                  sub { shift; $env->{'turnaround.i18n.maketext'}->loc(@_) };
 
                 return $app->($env);
               }

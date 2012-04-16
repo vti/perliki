@@ -10,7 +10,7 @@ use Test::Fatal;
 use Test::MockObject::Extends;
 
 use Perliki::Action::Update;
-use Lamework::DispatchedRequest;
+use Turnaround::DispatchedRequest;
 
 sub setup : Test(setup) {
     my $self = shift;
@@ -44,7 +44,7 @@ sub set_page_on_GET_method : Test {
 
     $action->run;
 
-    my $vars = $action->env->{'lamework.displayer.vars'};
+    my $vars = $action->env->{'turnaround.displayer.vars'};
 
     ok($vars->{page});
 }
@@ -59,7 +59,7 @@ sub set_validation_errors : Test {
 
     $action->run;
 
-    my $errors = $action->env->{'lamework.displayer.vars'}->{errors};
+    my $errors = $action->env->{'turnaround.displayer.vars'}->{errors};
 
     is_deeply($errors, {content => 'REQUIRED'});
 }
@@ -78,7 +78,7 @@ sub on_preview_set_vars : Test(3) {
 
     $action->run;
 
-    my $vars = $action->env->{'lamework.displayer.vars'};
+    my $vars = $action->env->{'turnaround.displayer.vars'};
 
     ok(exists $vars->{form}->{content});
     ok(exists $vars->{preview});
@@ -139,11 +139,11 @@ sub _build_action {
 
     my $action = Perliki::Action::Update->new(%params);
 
-    my $dr = Lamework::DispatchedRequest->new(captures => $captures);
+    my $dr = Turnaround::DispatchedRequest->new(captures => $captures);
     $dr = Test::MockObject::Extends->new($dr);
     $dr->mock(build_path => sub {'/'});
 
-    $action->env->{'lamework.dispatched_request'} = $dr;
+    $action->env->{'turnaround.dispatched_request'} = $dr;
 
     return $action;
 }
