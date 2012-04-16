@@ -1,0 +1,36 @@
+---
+- route: /
+  name:  index
+
+- route: /wiki/
+  name:  pages
+
+- route: /wiki/:name
+  name:  page
+
+- route: /create/:name
+  name:  create
+
+- route: /update/:name
+  name:  update
+
+- route: /history/:name
+  name:  history
+
+- route: /diff/:name
+  name:  diff
+
+- route: /changes
+  name:  changes
+
+- route: /login
+  name:  login
+
+- route: /logout
+  name:  logout
+
+- route: /not_found
+  name:  not_found
+
+- route: /forbidden
+  name:  forbidden

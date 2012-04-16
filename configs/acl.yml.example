@@ -1,0 +1,20 @@
+---
+roles:
+    - anonymous
+    - user
+allow:
+    anonymous:
+        - login
+        - not_found
+        - forbidden
+        #- index
+        #- page
+        #- pages
+        #- changes
+        #- diff
+        #- history
+    user:
+        - *
+deny:
+    user:
+        - login

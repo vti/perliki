@@ -5,14 +5,14 @@ use warnings;
 
 use base 'Lamework';
 
-use Lamework::ACL;
+use Lamework::ACL::Loader;
 use Lamework::ActionFactory;
 use Lamework::Dispatcher::Routes;
 use Lamework::Displayer;
 use Lamework::HelperFactory;
 use Lamework::I18N;
 use Lamework::Renderer::Caml;
-use Lamework::Routes;
+use Lamework::Routes::Loader;
 
 use Perliki::DB;
 use Perliki::DB::User;
@@ -24,7 +24,8 @@ sub startup {
     my $self = shift;
 
     my $config =
-      Perliki::Config->new(home => $self->{home}->to_string)->load('config.yml');
+      Perliki::Config->new(home => $self->{home}->catfile('configs'))
+      ->load('config.yml');
     $self->{config} = $config;
 
     Perliki::DB->init_db(%{$config->{database}});
@@ -38,6 +39,7 @@ sub startup {
 
     $self->add_middleware(
         'ErrorDocument',
+        403        => '/forbidden',
         404        => '/not_found',
         subrequest => 1
     );
@@ -52,22 +54,29 @@ sub startup {
 
     $self->add_middleware(
         'Session::Cookie',
-        secret  => $self->{config}->{session}->{secret},
-        expires => $self->{config}->{session}->{expires}
+        secret  => $config->{session}->{secret},
+        expires => $config->{session}->{expires}
     );
 
     $self->add_middleware('I18N', i18n => $i18n);
 
-    $self->add_middleware('RequestDispatcher',
-        dispatcher =>
-          Lamework::Dispatcher::Routes->new(routes => $self->_build_routes));
+    $self->add_middleware(
+        'RequestDispatcher',
+        dispatcher => Lamework::Dispatcher::Routes->new(
+            routes => Lamework::Routes::Loader->new->load(
+                $self->{home}->catfile('configs/routes.yml')
+            )
+        )
+    );
 
     $self->add_middleware(
         'User',
         user_loader => sub {
-            my ($params, $env) = @_;
+            my ($session, $env) = @_;
 
-            my $user = Perliki::DB::User->new(id => $params->{id})->load;
+            return unless $session->{user};
+
+            my $user = Perliki::DB::User->new(id => $session->{user}->{id})->load;
             return unless $user;
 
             $env->{'lamework.displayer.vars'}->{'user'} = $user->to_hash;
@@ -75,7 +84,13 @@ sub startup {
         }
     );
 
-    $self->add_middleware('ACL', acl => $self->_build_acl, redirect_to => '/login');
+    $self->add_middleware(
+        'ACL',
+        acl => Lamework::ACL::Loader->load(
+            $self->{home}->catfile('configs/acl.yml')
+        ),
+        redirect_to => '/login'
+    );
 
     $self->add_middleware(
         'ActionDispatcher',
@@ -114,51 +129,6 @@ sub startup {
     $self->add_middleware('ViewDisplayer', displayer => $displayer);
 
     return $self;
-}
-
-sub _build_routes {
-    my $self = shift;
-
-    my $routes = Lamework::Routes->new;
-
-    $routes->add_route('/',              name => 'index');
-    $routes->add_route('/wiki/',         name => 'pages');
-    $routes->add_route('/wiki/:name',    name => 'page');
-    $routes->add_route('/create/:name',  name => 'create');
-    $routes->add_route('/update/:name',  name => 'update');
-    $routes->add_route('/history/:name', name => 'history');
-    $routes->add_route('/diff/:name',    name => 'diff');
-    $routes->add_route('/changes',       name => 'changes');
-    $routes->add_route('/login',         name => 'login');
-    $routes->add_route('/logout',        name => 'logout');
-    $routes->add_route('/not_found',     name => 'not_found');
-
-    return $routes;
-}
-
-sub _build_acl {
-    my $self = shift;
-
-    my $acl = Lamework::ACL->new;
-
-    $acl->add_role('anonymous');
-    $acl->allow('anonymous', 'login');
-    $acl->allow('anonymous', 'not_found');
-
-    if (!$self->{config}->{wiki}->{private}) {
-        $acl->allow('anonymous', 'index');
-        $acl->allow('anonymous', 'page');
-        $acl->allow('anonymous', 'pages');
-        $acl->allow('anonymous', 'changes');
-        $acl->allow('anonymous', 'diff');
-        $acl->allow('anonymous', 'history');
-    }
-
-    $acl->add_role('user');
-    $acl->allow('user', '*');
-    $acl->deny('user', 'login');
-
-    return $acl;
 }
 
 1;
