@@ -38,7 +38,7 @@ sub run {
         $self->set_var(errors => $self->{validator}->errors);
     }
 
-    return $self;
+    return;
 }
 
 sub _load_user {

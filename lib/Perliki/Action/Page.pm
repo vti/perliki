@@ -27,6 +27,8 @@ sub run {
     }
 
     $self->set_var(page => $page->to_hash);
+
+    return;
 }
 
 1;

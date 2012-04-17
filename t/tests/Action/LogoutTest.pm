@@ -44,9 +44,7 @@ sub redirect_after_logout : Test {
         )
     );
 
-    $action->run;
-
-    is($action->res->code, 302);
+    is($action->run->code, 302);
 }
 
 sub _build_action {

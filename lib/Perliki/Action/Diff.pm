@@ -40,6 +40,8 @@ sub run {
         page   => $page->to_hash,
         diff   => $diff
     );
+
+    return;
 }
 
 sub _load_history {

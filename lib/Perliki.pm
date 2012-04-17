@@ -5,14 +5,14 @@ use warnings;
 
 use base 'Turnaround';
 
-use Turnaround::ACL::ConfigLoader;
+use Turnaround::ACL::FromConfig;
 use Turnaround::ActionFactory;
 use Turnaround::Dispatcher::Routes;
 use Turnaround::Displayer;
 use Turnaround::HelperFactory;
 use Turnaround::I18N;
 use Turnaround::Renderer::Caml;
-use Turnaround::Routes::ConfigLoader;
+use Turnaround::Routes::FromConfig;
 
 use Perliki::DB;
 use Perliki::DB::User;
@@ -63,7 +63,7 @@ sub startup {
     $self->add_middleware(
         'RequestDispatcher',
         dispatcher => Turnaround::Dispatcher::Routes->new(
-            routes => Turnaround::Routes::ConfigLoader->new->load(
+            routes => Turnaround::Routes::FromConfig->new->load(
                 $self->{home}->catfile('configs/routes.yml')
             )
         )
@@ -86,7 +86,7 @@ sub startup {
 
     $self->add_middleware(
         'ACL',
-        acl => Turnaround::ACL::ConfigLoader->new->load(
+        acl => Turnaround::ACL::FromConfig->new->load(
             $self->{home}->catfile('configs/acl.yml')
         ),
         redirect_to => '/login'

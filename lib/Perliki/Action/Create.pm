@@ -40,6 +40,8 @@ sub run {
     }
 
     $self->set_var(form => $self->validated_params);
+
+    return;
 }
 
 1;

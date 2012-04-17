@@ -24,6 +24,8 @@ sub run {
     } @pages;
 
     $self->set_var(pages => [@pages]);
+
+    return;
 }
 
 1;

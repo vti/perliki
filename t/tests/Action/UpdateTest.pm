@@ -126,9 +126,7 @@ sub redirect_after_update : Test {
           $self->_build_env(method => 'POST', content => 'content=foobar')
     );
 
-    $action->run;
-
-    is($action->res->code, 302);
+    is($action->run->code, 302);
 }
 
 sub _build_action {

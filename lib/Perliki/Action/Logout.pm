@@ -13,7 +13,7 @@ sub run {
     my $session = Plack::Session->new($self->env);
     $session->expire;
 
-    $self->redirect('/');
+    return $self->redirect('/');
 }
 
 1;

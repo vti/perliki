@@ -15,6 +15,8 @@ sub run {
     @pages = map { $_->to_hash } @pages;
 
     $self->set_var(pages => [@pages]);
+
+    return;
 }
 
 1;

@@ -38,6 +38,8 @@ sub run {
         page => $page->to_hash,
         form => $self->merge_with_params($page->to_hash),
     );
+
+    return;
 }
 
 1;
