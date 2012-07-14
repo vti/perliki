@@ -1,11 +1,10 @@
 =head1 Perliki
 
-Is a simple wiki engine.
+A simple wiki engine.
 
 =head1 Installation
 
     $ sudo cpanm --installdeps .
-    $ cp config.yml.example config.yml
+    $ cp configs/config.yml.example configs/config.yml
     $ sqlite3 wiki.db < schema/SQLite.sql
     $ plackup
-
