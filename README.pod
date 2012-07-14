@@ -4,12 +4,16 @@ A simple wiki engine.
 
 =head1 Installation
 
+    # Clone contrib libraries
+    $ git submodule update --init
+
     # Install dependencies
     $ cd contrib/object-db; sudo cpanm --installdeps .
     $ cd contrib/turnaround; sudo cpanm --installdeps .
     $ sudo cpanm --installdeps .
 
     # Copy configs
+    $ cp configs/acl.yml.example configs/acl.yml
     $ cp configs/config.yml.example configs/config.yml
 
     # Create database
