@@ -15,7 +15,7 @@ use Perliki::DB;
 use Perliki::DB::User;
 use Perliki::Config;
 
-my $config = Perliki::Config->new(home => "$RealBin/../")->load('config.yml');
+my $config = Perliki::Config->new(home => "$RealBin/../")->load('configs/config.yml');
 
 Perliki::DB->init_db(%{$config->{database}});
 
