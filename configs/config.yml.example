@@ -5,7 +5,7 @@ session:
     secret: secret
     expires: 3000
 database:
-    dsn: 'dbi:SQLite:__HOME__/../wiki.db'
+    dsn: 'dbi:SQLite:__HOME__/wiki.db'
     attrs:
         sqlite_unicode: 1
         RaiseError: 1
