@@ -31,14 +31,15 @@ WriteMakefile(
     ),
 
     PREREQ_PM => {
-        'Carp'           => '0',
-        'Cwd'            => '0',
-        'Encode'         => '0',
-        'File::Basename' => '0',
-        'File::Spec'     => '0',
-        'Plack'          => '0',
-        'Scalar::Util'   => '0',
-        'Storable'       => '0',
+        'Carp'                               => '0',
+        'Cwd'                                => '0',
+        'Encode'                             => '0',
+        'File::Basename'                     => '0',
+        'File::Spec'                         => '0',
+        'Plack'                              => '0',
+        'Plack::Middleware::Session::Cookie' => '0',
+        'Scalar::Util'                       => '0',
+        'Storable'                           => '0',
 
         'Config::Tiny'      => '0',
         'Plack'             => '0',
