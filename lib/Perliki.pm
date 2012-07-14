@@ -23,8 +23,7 @@ sub startup {
     my $self = shift;
 
     my $config =
-      Perliki::Config->new(home => $self->{home}->catfile('configs'))
-      ->load('config.yml');
+      Perliki::Config->new(home => $self->{home})->load('configs/config.yml');
     $self->{config} = $config;
 
     Perliki::DB->init_db(%{$config->{database}});
@@ -71,7 +70,8 @@ sub startup {
 
             return unless $session->{user};
 
-            my $user = Perliki::DB::User->new(id => $session->{user}->{id})->load;
+            my $user =
+              Perliki::DB::User->new(id => $session->{user}->{id})->load;
             return unless $user;
 
             $env->{'turnaround.displayer.vars'}->{'user'} = $user->to_hash;
@@ -100,7 +100,8 @@ sub startup {
             sub {
                 my $env = shift;
 
-                $env->{'turnaround.displayer.vars'}->{'title'} = $config->{wiki}->{title};
+                $env->{'turnaround.displayer.vars'}->{'title'} =
+                  $config->{wiki}->{title};
 
                 return $app->($env);
               }
