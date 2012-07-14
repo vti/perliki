@@ -4,7 +4,16 @@ A simple wiki engine.
 
 =head1 Installation
 
+    # Install dependencies
+    $ cd contrib/object-db; sudo cpanm --installdeps .
+    $ cd contrib/turnaround; sudo cpanm --installdeps .
     $ sudo cpanm --installdeps .
+
+    # Copy configs
     $ cp configs/config.yml.example configs/config.yml
+
+    # Create database
     $ sqlite3 wiki.db < schema/SQLite.sql
+
+    # Start the server
     $ plackup
