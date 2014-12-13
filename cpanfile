@@ -1,0 +1,19 @@
+requires 'Config::Tiny';
+requires 'DBD::SQLite';
+requires 'I18N::AcceptLanguage';
+requires 'JSON';
+requires 'ObjectDB';
+requires 'Plack';
+requires 'Plack::Middleware::Session::Cookie';
+requires 'Routes::Tiny';
+requires 'Storable';
+requires 'String::CamelCase';
+requires 'Text::Caml';
+requires 'Text::MultiMarkdown';
+requires 'Try::Tiny';
+
+requires 'Test::Class';
+requires 'Test::MockObject::Extends';
+requires 'Test::Fatal';
+requires 'Test::More';
+requires 'Test::Spec';
