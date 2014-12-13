@@ -8,9 +8,10 @@ A simple wiki engine.
     $ git submodule update --init
 
     # Install dependencies
-    $ cd contrib/object-db; sudo cpanm --installdeps .
-    $ cd contrib/turnaround; sudo cpanm --installdeps .
-    $ sudo cpanm --installdeps .
+    $ cpanm --installdeps . -L perl5/
+
+    # or with carton
+    $ carton install
 
     # Copy configs
     $ cp configs/acl.yml.example configs/acl.yml
@@ -20,4 +21,7 @@ A simple wiki engine.
     $ sqlite3 wiki.db < schema/SQLite.sql
 
     # Start the server
-    $ plackup
+    $ plackup -Mlocal::lib=perl5
+
+    # or with carton
+    $ carton exec -- plackup

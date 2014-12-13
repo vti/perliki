@@ -18,7 +18,8 @@ sub run {
 
     my $history = [];
 
-    my @pages = $page->find_related('history', order_by => 'revision DESC');
+    my @pages =
+      $page->find_related('history', order_by => [revision => 'DESC']);
 
     my $prev_revision = $page->get_column('revision');
     foreach my $page (@pages) {

@@ -11,7 +11,7 @@ sub run {
     my $self = shift;
 
     my @pages = Perliki::DB::Page->new->table->find(
-        order_by => 'updated DESC',
+        order_by => [updated => 'DESC'],
         limit    => 10
     );
 

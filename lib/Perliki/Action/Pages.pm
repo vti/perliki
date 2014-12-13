@@ -10,7 +10,8 @@ use Perliki::DB::Page;
 sub run {
     my $self = shift;
 
-    my @pages = Perliki::DB::Page->new->table->find(order_by => 'created DESC');
+    my @pages =
+      Perliki::DB::Page->new->table->find(order_by => [created => 'DESC']);
 
     @pages = map { $_->to_hash } @pages;
 
